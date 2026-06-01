@@ -1,0 +1,224 @@
+﻿@model Pedido
+
+<div class="container mt-5">
+
+    <div class="success-card">
+
+        <div class="text-center mb-4">
+
+            <div class="success-icon">
+                ✅
+            </div>
+
+            <h1 class="success-title">
+                Pedido Realizado!
+            </h1>
+
+            <p class="text-muted">
+                @ViewBag.CheckoutCompletoMensagem
+            </p>
+
+        </div>
+
+        <div class="order-info">
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <small>Cliente</small>
+                        <h5>@Model.Nome</h5>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <small>Pedido Nº</small>
+                        <h5>#@Model.PedidoId</h5>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <small>Data</small>
+                        <h5>@Model.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")</h5>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <h4 class="mt-5 mb-3">
+            🍔 Itens do Pedido
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Produto</th>
+                        <th>Qtd.</th>
+                        <th>Preço</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.PedidoItens)
+                    {
+                        <tr>
+
+                            <td>
+                                <img src="@item.Lanche.ImagemUrl"
+                                     class="produto-img"
+                                     alt="@item.Lanche.Nome" />
+                            </td>
+
+                            <td>
+                                <strong>@item.Lanche.Nome</strong>
+                            </td>
+
+                            <td>
+                                @item.Quantidade
+                            </td>
+
+                            <td>
+                                @item.Lanche.Preco.ToString("C")
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="total-box">
+
+            <span>Total do Pedido</span>
+
+            <h2>
+                @(((decimal)ViewBag.TotalPedido).ToString("C"))
+            </h2>
+
+        </div>
+
+        <div class="text-center mt-4">
+
+            <a asp-controller="Pedido"
+               asp-action="GerarPdf"
+               asp-route-pedidoId="@Model.PedidoId"
+               class="btn-pdf">
+                📄 Baixar PDF
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn-home">
+
+                🏠 Voltar para Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .success-card {
+        background: white;
+        border-radius: 30px;
+        padding: 40px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .success-icon {
+        font-size: 5rem;
+    }
+
+    .success-title {
+        font-weight: 700;
+        margin-top: 10px;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 18px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+        .info-box small {
+            color: #777;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+    .produto-img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .table {
+        margin-top: 15px;
+    }
+
+    .total-box {
+        margin-top: 30px;
+        background: linear-gradient(135deg,#28a745,#34c759);
+        color: white;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+    }
+
+        .total-box h2 {
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+    .btn-home {
+        display: inline-block;
+        text-decoration: none;
+        background: #111;
+        color: white;
+        padding: 14px 28px;
+        border-radius: 15px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+        .btn-home:hover {
+            color: #ffcc00;
+            transform: translateY(-2px);
+        }
+
+    .btn-pdf {
+        display: inline-block;
+        text-decoration: none;
+        background: #dc3545;
+        color: white;
+        padding: 14px 28px;
+        border-radius: 15px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+        .btn-pdf:hover {
+        color: white;
+            transform: translateY(-2px);
+        }
+
+</style>

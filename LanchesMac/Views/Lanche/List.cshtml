@@ -1,0 +1,140 @@
+﻿@model LancheListViewModel
+
+<div class="container mt-5">
+
+    <div class="category-header mb-4">
+
+        <div>
+            <h1 class="category-title">
+                🍔 @Model.CategoriaAtual
+            </h1>
+
+            <p class="category-subtitle">
+                Escolha seu próximo combo destruidor de fome.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filter-box mb-5">
+
+        <form method="get"
+              asp-controller="Lanche"
+              asp-action="List">
+
+            <div class="row g-3 align-items-center">
+
+                <!-- PESQUISA -->
+                <div class="col-lg-5">
+
+                    <input type="text"
+                           name="searchString"
+                           class="form-control custom-input"
+                           placeholder="Pesquisar lanche..." />
+
+                </div>
+
+                <!-- CATEGORIA -->
+                <div class="col-lg-4">
+
+                    <select name="categoria"
+                            class="form-select custom-input">
+
+                        @foreach (var categoria in Model.Categorias)
+                        {
+                            <option value="@categoria.CategoriaNome">
+                                @categoria.CategoriaNome
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- BOTÃO -->
+                <div class="col-lg-3">
+
+                    <button type="submit"
+                            class="filter-button w-100">
+
+                        🔍 Buscar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- LISTA -->
+    <div class="row g-4">
+
+        @foreach (var lanche in Model.Lanches)
+        {
+            <partial name="_LanchesResumo" for="@lanche" />
+        }
+
+    </div>
+
+</div>
+
+<style>
+
+    .category-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .category-title {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 8px;
+    }
+
+    .category-subtitle {
+        color: #777;
+        font-size: 1.05rem;
+    }
+
+    .filter-box {
+        background: white;
+        padding: 25px;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    .custom-input {
+        border-radius: 14px;
+        border: 1px solid #e3e3e3;
+        padding: 14px;
+        font-size: 1rem;
+        transition: 0.3s;
+    }
+
+        .custom-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 0.2rem rgba(255,204,0,0.18);
+        }
+
+    .filter-button {
+        border: none;
+        background: linear-gradient(135deg, #111, #2a2a2a);
+        color: white;
+        padding: 14px;
+        border-radius: 14px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .filter-button:hover {
+            transform: translateY(-2px);
+            color: #ffcc00;
+        }
+
+</style>

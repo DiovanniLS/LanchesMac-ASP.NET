@@ -1,0 +1,124 @@
+﻿@model HomeViewModel
+
+<partial name="_Carousel" />
+
+<div class="container mt-5">
+
+    <div class="hero-section text-center mb-5">
+
+        <h1 class="hero-title">
+            🍔 Os Preferidos da Semana
+        </h1>
+
+        <p class="hero-subtitle">
+            Os lanches mais pedidos saindo direto da chapa 🔥
+        </p>
+
+    </div>
+
+    <div class="promo-banner mb-5">
+
+        <div>
+            <h3 class="mb-2">
+                Tá com fome??? 😵🍟
+            </h3>
+
+            <p class="mb-0">
+                Então prepara o estômago porque hoje o combo tá insano.
+            </p>
+        </div>
+
+        <a asp-controller="Lanche"
+           asp-action="List"
+           class="promo-button">
+
+            Ver Cardápio
+        </a>
+
+    </div>
+
+    <div class="home-header text-center mb-5">
+
+        <h1 class="display-5 fw-bold">
+            🍔 Os Preferidos da Semana
+        </h1>
+
+        <p class="text-muted">
+            Os lanches mais pedidos da galera faminta.
+        </p>
+
+    </div>
+
+    <div class="container-fluid px-4">
+
+        <div class="row g-4 justify-content-center">
+
+            @foreach (var lanche in Model.LanchesPreferidos)
+            {
+                <partial name="_LanchesResumo" for="@lanche" />
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .hero-section {
+        padding: 10px 0 20px;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: #666;
+    }
+
+    .promo-banner {
+        background: linear-gradient(135deg, #111, #222);
+        border-radius: 24px;
+        padding: 30px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+        .promo-banner h3 {
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .promo-banner p {
+            color: rgba(255,255,255,0.75);
+        }
+
+    .promo-button {
+        background: #ffcc00;
+        color: #111;
+        padding: 14px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s;
+        white-space: nowrap;
+    }
+
+        .promo-button:hover {
+            transform: translateY(-2px);
+            background: #ffd633;
+            color: #111;
+        }
+
+</style>

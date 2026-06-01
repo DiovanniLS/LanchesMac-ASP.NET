@@ -1,0 +1,170 @@
+﻿@model Pedido
+
+<div class="container mt-5">
+
+    <div class="checkout-card">
+
+        <div class="text-center mb-5">
+
+            <h1 class="checkout-title">
+                🍔 Finalizar Pedido
+            </h1>
+
+            <p class="checkout-subtitle">
+                Falta pouco para sua comida chegar até você.
+            </p>
+
+        </div>
+
+        <form asp-action="Checkout" method="post">
+
+
+            <h4 class="section-title">👤 Dados Pessoais</h4>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Nome"></label>
+                    <input asp-for="Nome" class="form-control custom-input" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Sobrenome"></label>
+                    <input asp-for="Sobrenome" class="form-control custom-input" />
+                    <span asp-validation-for="Sobrenome" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <h4 class="section-title mt-4">📍 Endereço</h4>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Endereco1"></label>
+                    <input asp-for="Endereco1" class="form-control custom-input" />
+                    <span asp-validation-for="Endereco1" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Endereco2"></label>
+                    <input asp-for="Endereco2" class="form-control custom-input" />
+                    <span asp-validation-for="Endereco2" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Cep"></label>
+                    <input asp-for="Cep" class="form-control custom-input" />
+                    <span asp-validation-for="Cep" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Cidade"></label>
+                    <input asp-for="Cidade" class="form-control custom-input" />
+                    <span asp-validation-for="Cidade" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Estado"></label>
+                    <input asp-for="Estado" class="form-control custom-input" />
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <h4 class="section-title mt-4">📞 Contato</h4>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Telefone"></label>
+                    <input asp-for="Telefone" class="form-control custom-input" />
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control custom-input" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="d-flex gap-3 mt-5 flex-wrap">
+
+                <button type="submit"
+                        class="btn-finish">
+                    ✅ Concluir Pedido
+                </button>
+
+                <a asp-controller="CarrinhoCompra"
+                   asp-action="Index"
+                   class="btn-back">
+                    🛒 Voltar ao Carrinho
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<style>
+
+    .checkout-card {
+        background: white;
+        border-radius: 30px;
+        padding: 40px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .checkout-title {
+        font-size: 3rem;
+        font-weight: 700;
+    }
+
+    .checkout-subtitle {
+        color: #777;
+    }
+
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .custom-input {
+        border-radius: 14px;
+        padding: 12px;
+    }
+
+        .custom-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 .2rem rgba(255,204,0,.15);
+        }
+
+    .btn-finish {
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 16px;
+        padding: 14px 28px;
+        font-weight: 600;
+    }
+
+    .btn-back {
+        background: #f4f4f4;
+        color: #222;
+        text-decoration: none;
+        border-radius: 16px;
+        padding: 14px 28px;
+        font-weight: 600;
+    }
+
+        .btn-back:hover {
+            color: #111;
+        }
+
+</style>

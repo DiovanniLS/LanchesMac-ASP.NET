@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - LanchesMac</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f7;
+            color: #222;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: linear-gradient(135deg, #111, #1f1f1f);
+            padding: 16px 0;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .navbar-brand {
+            color: #ffcc00 !important;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+            .navbar-brand:hover {
+                transform: scale(1.03);
+            }
+
+        .navbar-nav-custom {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            color: #f1f1f1 !important;
+            font-weight: 500;
+            position: relative;
+            padding: 10px 14px !important;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+            .nav-link:hover {
+                background: rgba(255,255,255,0.08);
+                color: #ffcc00 !important;
+            }
+
+        /* MAIN */
+
+        main {
+            min-height: 80vh;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #111;
+            color: #bbb;
+            padding: 22px 0;
+            margin-top: 50px;
+        }
+
+            footer strong {
+                color: #ffcc00;
+            }
+
+        /* CONTAINER */
+
+        .page-wrapper {
+            animation: fadeIn 0.4s ease;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-dark">
+
+            <div class="container">
+
+                <!-- LOGO -->
+
+                <a class="navbar-brand"
+                   asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    🍔 LanchesMac
+
+                </a>
+
+                <!-- MENU MOBILE -->
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarContent">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <!-- NAV -->
+
+                <div class="collapse navbar-collapse justify-content-between"
+                     id="navbarContent">
+
+                    <div class="navbar-nav-custom">
+
+                        <a class="nav-link"
+                           asp-area=""
+                           asp-controller="Home"
+                           asp-action="Index">
+
+                            🏠 Home
+
+                        </a>
+
+                        <a class="nav-link"
+                           asp-area=""
+                           asp-controller="Lanche"
+                           asp-action="List">
+
+                            🍟 Lanches
+
+                        </a>
+
+                        <a class="nav-link"
+                           asp-area=""
+                           asp-controller="Contato"
+                           asp-action="Index">
+
+                            📞 Contato
+
+                        </a>
+
+                    </div>
+
+                    <!-- CARRINHO -->
+
+                    <div class="d-flex align-items-center">
+
+                        @await Component.InvokeAsync("CarrinhoCompraResumo")
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- CONTEÚDO -->
+
+    <div class="container page-wrapper">
+
+        <main role="main">
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <footer class="text-center">
+
+        <div class="container">
+
+            © 2026 <strong>LanchesMac</strong> 🍟
+            Todos os direitos reservados.
+
+        </div>
+
+    </footer>
+
+    <!-- SCRIPTS -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

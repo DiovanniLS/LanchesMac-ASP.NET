@@ -1,0 +1,247 @@
+﻿@model CarrinhoCompraViewModel
+
+<div class="container mt-5">
+
+    <div class="cart-container">
+
+        <div class="cart-header">
+
+            <div class="d-flex align-items-center gap-3">
+                <img src="~/images/Full-Cart-icon.png"
+                     width="45"
+                     height="45" />
+
+                <div>
+                    <h2 class="cart-title">
+                        Seu Carrinho
+                    </h2>
+
+                    <p class="cart-subtitle">
+                        Confira seus lanches antes do checkout 🍔
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-responsive mt-4">
+
+            <table class="table align-middle custom-table">
+
+                <thead>
+                    <tr>
+                        <th>Qtd</th>
+                        <th>Lanche</th>
+                        <th class="text-end">Preço</th>
+                        <th class="text-end">Subtotal</th>
+                        <th class="text-center">Remover</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.CarrinhoCompra.CarrinhoCompraItems)
+                    {
+                        <tr>
+
+                            <td class="fw-bold text-center">
+                                @item.Quantidade
+                            </td>
+
+                            <td>
+                                <div class="fw-semibold">
+                                    @item.Lanche.Nome
+                                </div>
+                            </td>
+
+                            <td class="text-end">
+                                @item.Lanche.Preco.ToString("c")
+                            </td>
+
+                            <td class="text-end fw-bold text-success">
+                                @((item.Quantidade * item.Lanche.Preco).ToString("c"))
+                            </td>
+
+                            <td class="text-center">
+
+                                <a asp-controller="CarrinhoCompra"
+                                   asp-action="RemoverItemDoCarrinhoCompra"
+                                   asp-route-lancheId="@item.Lanche.LancheId"
+                                   class="remove-btn">
+
+                                    <img src="~/images/cancelar.png"
+                                       />
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+                <tfoot>
+
+                    <tr>
+                        <td colspan="3"
+                            class="text-end total-label">
+                            Total:
+                        </td>
+
+                        <td class="text-end total-value">
+                            @Model.CarrinhoCompraTotal.ToString("c")
+                        </td>
+
+                        <td></td>
+                    </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
+
+        <div class="cart-actions mt-4">
+
+            <a class="btn-finish"
+               asp-controller="Pedido"
+               asp-action="Checkout">
+
+                Finalizar Pedido 🚀
+            </a>
+
+            <a class="btn-continue"
+               asp-controller="Lanche"
+               asp-action="List">
+
+                Continuar Comprando
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .cart-container {
+        background: white;
+        border-radius: 24px;
+        padding: 35px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    }
+
+    .cart-header {
+        border-bottom: 1px solid #ececec;
+        padding-bottom: 20px;
+    }
+
+    .cart-title {
+        font-weight: 700;
+        margin: 0;
+        color: #222;
+    }
+
+    .cart-subtitle {
+        color: #777;
+        margin: 0;
+        margin-top: 4px;
+    }
+
+    .custom-table {
+        border-radius: 18px;
+        overflow: hidden;
+    }
+
+        .custom-table thead {
+            background: linear-gradient(135deg, #111, #2a2a2a);
+            color: white;
+        }
+
+        .custom-table th {
+            padding: 18px !important;
+            border: none;
+            font-weight: 600;
+        }
+
+        .custom-table td {
+            padding: 18px !important;
+            vertical-align: middle;
+        }
+
+        .custom-table tbody tr {
+            transition: 0.25s;
+        }
+
+            .custom-table tbody tr:hover {
+                background: #fafafa;
+            }
+
+    .remove-btn {
+        width: 34px;
+        height: 34px;
+        background: #ffefef;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.25s;
+    }
+
+        .remove-btn:hover {
+            background: #ffdede;
+            transform: scale(1.08);
+        }
+
+    .total-label {
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+
+    .total-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #198754;
+    }
+
+    .cart-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .btn-finish {
+        background: linear-gradient(135deg, #198754, #28a745);
+        color: white;
+        padding: 14px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+        box-shadow: 0 6px 18px rgba(25,135,84,0.25);
+    }
+
+        .btn-finish:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+    .btn-continue {
+        background: #f3f3f3;
+        color: #222;
+        padding: 14px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .btn-continue:hover {
+            background: #e7e7e7;
+            color: #111;
+        }
+
+</style>
