@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Acesso Negado";
+}
+
+<div class="container mt-5">
+
+    <div class="access-card text-center">
+
+        <div class="mb-4">
+            <h1 class="display-1">🚫</h1>
+        </div>
+
+        <h1 class="fw-bold text-danger">
+            Acesso Negado
+        </h1>
+
+        <p class="lead text-muted mt-3">
+            Você não possui permissão para acessar esta página.
+        </p>
+
+        <p class="text-secondary">
+            Caso acredite que isso seja um erro,
+            entre em contato com o administrador do sistema.
+        </p>
+
+        <div class="mt-4">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-warning btn-lg">
+
+                🏠 Voltar para Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .access-card {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 50px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+</style>

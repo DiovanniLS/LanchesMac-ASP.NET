@@ -1,0 +1,130 @@
+﻿@model LanchesMac.Models.Categoria
+
+@{
+    ViewData["Title"] = "Detalhes da Categoria";
+}
+
+<div class="container">
+
+    <div class="details-card">
+
+        <div class="text-center mb-4">
+
+            <h1 class="page-title">
+                📂 Detalhes da Categoria
+            </h1>
+
+            <p class="text-muted">
+                Visualização completa das informações cadastradas.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            <div class="info-item">
+                <span class="info-label">Nome da Categoria</span>
+                <span class="info-value">@Model.CategoriaNome</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">Descrição</span>
+                <span class="info-value">@Model.Descricao</span>
+            </div>
+
+        </div>
+
+        <div class="d-flex gap-3 mt-4">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.CategoriaId"
+               class="btn-edit">
+
+                ✏ Editar
+
+            </a>
+
+            <a asp-action="Index"
+               class="btn-back">
+
+                ↩ Voltar
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .details-card {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .page-title {
+        font-size: 2.3rem;
+        font-weight: 700;
+    }
+
+    .info-box {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .info-item {
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 20px;
+    }
+
+    .info-label {
+        display: block;
+        font-size: .9rem;
+        color: #777;
+        margin-bottom: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .info-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .btn-edit {
+        background: #0d6efd;
+        color: white;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 14px;
+        font-weight: 600;
+    }
+
+        .btn-edit:hover {
+            color: white;
+            opacity: .9;
+        }
+
+    .btn-back {
+        background: #f1f1f1;
+        color: #222;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 14px;
+        font-weight: 600;
+    }
+
+        .btn-back:hover {
+            color: black;
+        }
+
+</style>

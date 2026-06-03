@@ -1,0 +1,81 @@
+﻿@model LanchesMac.Models.Categoria
+
+@{
+    ViewData["Title"] = "Nova Categoria";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-success text-white p-4">
+            <h2 class="mb-0">➕ Nova Categoria</h2>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <div class="mb-4">
+
+                    <label asp-for="CategoriaNome"
+                           class="form-label fw-bold">
+                    </label>
+
+                    <input asp-for="CategoriaNome"
+                           class="form-control form-control-lg" />
+
+                    <span asp-validation-for="CategoriaNome"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label asp-for="Descricao"
+                           class="form-label fw-bold">
+                    </label>
+
+                    <textarea asp-for="Descricao"
+                              rows="4"
+                              class="form-control">
+                    </textarea>
+
+                    <span asp-validation-for="Descricao"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-success px-4">
+                        💾 Salvar
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        ↩ Voltar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

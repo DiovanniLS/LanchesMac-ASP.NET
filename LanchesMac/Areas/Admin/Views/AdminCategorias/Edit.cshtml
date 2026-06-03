@@ -1,0 +1,145 @@
+﻿@model LanchesMac.Models.Categoria
+
+@{
+    ViewData["Title"] = "Editar Categoria";
+}
+
+<div class="container">
+
+    <div class="admin-card">
+
+        <div class="text-center mb-4">
+
+            <h1 class="page-title">
+                ✏️ Editar Categoria
+            </h1>
+
+            <p class="text-muted">
+                Atualize as informações da categoria.
+            </p>
+
+        </div>
+
+        <form asp-action="Edit">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger">
+            </div>
+
+            <input type="hidden" asp-for="CategoriaId" />
+
+            <div class="mb-4">
+
+                <label asp-for="CategoriaNome"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="CategoriaNome"
+                       class="form-control custom-input" />
+
+                <span asp-validation-for="CategoriaNome"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="Descricao"
+                       class="form-label fw-bold">
+                </label>
+
+                <textarea asp-for="Descricao"
+                          rows="4"
+                          class="form-control custom-input">
+                </textarea>
+
+                <span asp-validation-for="Descricao"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="d-flex gap-3">
+
+                <button type="submit"
+                        class="btn-save">
+
+                    💾 Salvar Alterações
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn-back">
+
+                    ↩ Voltar
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+
+    .admin-card {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .page-title {
+        font-weight: 700;
+        font-size: 2.3rem;
+    }
+
+    .custom-input {
+        border-radius: 14px;
+        padding: 12px;
+    }
+
+        .custom-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 .2rem rgba(255,204,0,.15);
+        }
+
+    .btn-save {
+        border: none;
+        background: #198754;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 14px;
+        font-weight: 600;
+    }
+
+        .btn-save:hover {
+            opacity: .9;
+        }
+
+    .btn-back {
+        text-decoration: none;
+        background: #f1f1f1;
+        color: #222;
+        padding: 12px 24px;
+        border-radius: 14px;
+        font-weight: 600;
+    }
+
+        .btn-back:hover {
+            color: black;
+        }
+
+</style>

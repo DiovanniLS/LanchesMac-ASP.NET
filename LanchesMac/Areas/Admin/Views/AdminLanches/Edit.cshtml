@@ -1,0 +1,182 @@
+﻿@model LanchesMac.Models.Lanche
+
+@{
+    ViewData["Title"] = "Editar Lanche";
+}
+
+<div class="container mt-5">
+
+    <div class="admin-card">
+
+        <div class="text-center mb-4">
+            <h1 class="page-title">
+                ✏️ Editar Lanche
+            </h1>
+
+            <p class="text-muted">
+                Atualize as informações do produto.
+            </p>
+        </div>
+
+        <form asp-action="Edit">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger">
+            </div>
+
+            <input type="hidden" asp-for="LancheId" />
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Nome" class="form-label fw-bold"></label>
+                    <input asp-for="Nome" class="form-control custom-input" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Preco" class="form-label fw-bold"></label>
+                    <input asp-for="Preco" class="form-control custom-input" />
+                    <span asp-validation-for="Preco" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="DescricaoCurta" class="form-label fw-bold"></label>
+                    <input asp-for="DescricaoCurta" class="form-control custom-input" />
+                    <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="DescricaoDetalhada" class="form-label fw-bold"></label>
+                    <textarea asp-for="DescricaoDetalhada"
+                              rows="4"
+                              class="form-control custom-input">
+                    </textarea>
+                    <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ImagemUrl" class="form-label fw-bold"></label>
+                    <input asp-for="ImagemUrl" class="form-control custom-input" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ImagemThumbnailUrl" class="form-label fw-bold"></label>
+                    <input asp-for="ImagemThumbnailUrl" class="form-control custom-input" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="QuantidadeEstoque" class="form-label fw-bold"></label>
+                    <input asp-for="QuantidadeEstoque" class="form-control custom-input" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Categoria" class="form-label fw-bold"></label>
+                    <select asp-for="CategoriaId"
+                            asp-items="ViewBag.CategoriaId"
+                            class="form-select custom-input">
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="form-check custom-check">
+                        <input asp-for="IsLanchePreferido"
+                               class="form-check-input" />
+                        <label asp-for="IsLanchePreferido"
+                               class="form-check-label">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="form-check custom-check">
+                        <input asp-for="EmEstoque"
+                               class="form-check-input" />
+                        <label asp-for="EmEstoque"
+                               class="form-check-label">
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+
+                <button type="submit"
+                        class="btn-save">
+                    💾 Salvar Alterações
+                </button>
+
+                <a asp-action="Index"
+                   class="btn-back">
+                    ← Voltar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<style>
+
+    .admin-card {
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .page-title {
+        font-size: 2.4rem;
+        font-weight: 700;
+    }
+
+    .custom-input {
+        border-radius: 14px;
+        padding: 12px;
+    }
+
+        .custom-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 .2rem rgba(255,204,0,.15);
+        }
+
+    .custom-check {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 14px;
+    }
+
+    .btn-save {
+        border: none;
+        padding: 14px 24px;
+        border-radius: 14px;
+        font-weight: 700;
+        color: #222;
+        background: linear-gradient(135deg,#ffcc00,#ffb300);
+        transition: .3s;
+    }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,204,0,.25);
+        }
+
+    .btn-back {
+        text-decoration: none;
+        padding: 14px 24px;
+        border-radius: 14px;
+        background: #f1f1f1;
+        color: #222;
+        font-weight: 600;
+    }
+
+        .btn-back:hover {
+            background: #e7e7e7;
+            color: #111;
+        }
+
+</style>

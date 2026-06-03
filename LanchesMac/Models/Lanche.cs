@@ -46,6 +46,9 @@ namespace LanchesMac.Models
         [Display(Name = "Estoque")]
         public bool EmEstoque { get; set; }
 
+        [Display(Name = "Quantidade")]
+        public int QuantidadeEstoque { get; set; }
+
         public int CategoriaId { get; set; }
         public virtual Categoria Categoria { get; set; }
     }

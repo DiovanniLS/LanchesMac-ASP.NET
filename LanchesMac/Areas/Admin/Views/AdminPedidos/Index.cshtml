@@ -1,0 +1,132 @@
+﻿@model IEnumerable<LanchesMac.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<div class="card shadow border-0 rounded-4">
+
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+
+        <h3 class="mb-0">
+            📦 Gerenciamento de Pedidos
+        </h3>
+
+        <span class="badge bg-warning text-dark">
+            @Model.Count() pedidos
+        </span>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>#</th>
+                        <th>Cliente</th>
+                        <th>Telefone</th>
+                        <th>Cidade</th>
+                        <th>Data</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th width="180">Ações</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>#@item.PedidoId</strong>
+                            </td>
+
+                            <td>
+                                @item.Nome @item.Sobrenome
+                            </td>
+
+                            <td>
+                                @item.Telefone
+                            </td>
+
+                            <td>
+                                @item.Cidade
+                            </td>
+
+                            <td>
+                                @item.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+
+                            <td>
+                                <strong>
+                                    @item.PedidoTotal.ToString("C")
+                                </strong>
+                            </td>
+
+                            <td>
+
+                                @if (item.PedidoEntregueEm == null)
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Pendente
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">
+                                        Entregue
+                                    </span>
+                                }
+
+                            </td>
+                            <td>
+                            <div class="d-flex gap-2">
+                            
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.PedidoId"
+                                   class="btn btn-sm btn-info">
+
+                                    👁 Detalhes
+
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.PedidoId"
+                                   class="btn btn-sm btn-danger">
+
+                                    🗑 Excluir
+
+                                </a>
+
+                                    <a
+                                       asp-action="GerarPdf"
+                                       asp-route-pedidoId="@item.PedidoId"
+                                       target="_blank"
+                                       class="btn btn-sm btn-secondary">
+                                        📄 PDF
+                                    </a>
+
+                           
+                            </div>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

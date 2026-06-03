@@ -1,0 +1,114 @@
+﻿@model IEnumerable<LanchesMac.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<div class="card shadow border-0 rounded-4">
+
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center p-4">
+
+        <h2 class="mb-0">📂 Categorias</h2>
+
+        <a asp-action="Create"
+           class="btn btn-success">
+            ➕ Nova Categoria
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th width="220">Ações</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            <strong>@item.CategoriaNome</strong>
+                        </td>
+
+                        <td>
+                            @item.Descricao
+                        </td>
+
+                        <td class="text-nowrap">
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.CategoriaId"
+                               class="btn btn-sm btn-info text-white">
+                                👁 Detalhes
+                            </a>
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.CategoriaId"
+                               class="btn btn-sm btn-warning">
+                                ✏ Editar
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.CategoriaId"
+                               class="btn btn-sm btn-danger">
+                                🗑 Excluir
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<style>
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+        .admin-header h1 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+    .card {
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .table th {
+        padding: 18px;
+    }
+
+    .table td {
+        padding: 16px 18px;
+        vertical-align: middle;
+    }
+
+    .btn-sm {
+        border-radius: 10px;
+        margin-right: 5px;
+    }
+
+</style>

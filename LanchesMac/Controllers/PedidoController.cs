@@ -1,5 +1,6 @@
 ﻿using LanchesMac.Models;
 using LanchesMac.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -19,14 +20,15 @@ namespace LanchesMac.Controllers
         }
 
 
-       
 
+        [Authorize]
         [HttpGet]
         public IActionResult Checkout()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Checkout(Pedido pedido)
         {
@@ -71,6 +73,18 @@ namespace LanchesMac.Controllers
 
                 //Exibe a view com dados do cliente e do pedido
 
+                foreach (var item in items)
+                {
+                    item.Lanche.QuantidadeEstoque -= item.Quantidade;
+
+                    if (item.Lanche.QuantidadeEstoque <= 0)
+                    {
+                        item.Lanche.QuantidadeEstoque = 0;
+                        item.Lanche.EmEstoque = false;
+                    }
+                }
+
+
                 return View("~/Views/Pedido/CheckoutCompleto.cshtml", pedido);
             }
             return View(pedido);
@@ -80,36 +94,51 @@ namespace LanchesMac.Controllers
         {
             var pedido = _pedidoRepository.GetPedidoById(pedidoId);
 
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
             var pdf = Document.Create(container =>
             {
                 container.Page(page =>
                 {
                     page.Margin(30);
 
-                    page.Header()
-                        .Text($"Pedido #{pedido.PedidoId}")
-                        .FontSize(24)
-                        .Bold();
+                    page.Header().Column(col =>
+                    {
+                        col.Item().Text("🍔 LanchesMac")
+                            .FontSize(26)
+                            .Bold();
+
+                        col.Item().Text($"Pedido #{pedido.PedidoId}");
+                    });
 
                     page.Content().Column(col =>
                     {
-                        col.Item().Text($"Cliente: {pedido.Nome} {pedido.Sobrenome}");
-                        col.Item().Text($"Data: {pedido.PedidoEnviado:dd/MM/yyyy HH:mm}");
-
-                        col.Item().PaddingVertical(10);
-
-                        foreach (var item in pedido.PedidoItens)
+                        col.Item().Table(table =>
                         {
-                            col.Item().Text(
-                                $"{item.Quantidade}x {item.Lanche.Nome} - {item.Lanche.Preco:C}"
-                            );
-                        }
+                            table.ColumnsDefinition(columns =>
+                            {
+                                columns.RelativeColumn();
+                                columns.ConstantColumn(80);
+                                columns.ConstantColumn(100);
+                            });
 
-                        col.Item().PaddingTop(20);
+                            table.Header(header =>
+                            {
+                                header.Cell().Text("Produto").Bold();
+                                header.Cell().Text("Qtd").Bold();
+                                header.Cell().Text("Preço").Bold();
+                            });
 
-                        col.Item().Text($"Total: {pedido.PedidoTotal:C}")
-                            .FontSize(18)
-                            .Bold();
+                            foreach (var item in pedido.PedidoItens)
+                            {
+                                table.Cell().Text(item.Lanche.Nome);
+                                table.Cell().Text(item.Quantidade.ToString());
+                                table.Cell().Text(item.Lanche.Preco.ToString("C"));
+                            }
+                        });
                     });
                 });
             }).GeneratePdf();

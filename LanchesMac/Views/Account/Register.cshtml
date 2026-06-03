@@ -1,0 +1,167 @@
+﻿@model RegisterViewModel
+
+<div class="container mt-5">
+
+    <div class="login-card">
+
+        <div class="text-center mb-4">
+
+            <h1 class="login-title">
+                📝 Criar Conta
+            </h1>
+
+            <p class="text-muted">
+                Cadastre-se para realizar pedidos e acompanhar suas compras.
+            </p>
+
+        </div>
+
+        <form asp-controller="Account"
+              asp-action="Register"
+              method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="UserName"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="UserName"
+                       class="form-control custom-input"
+                       placeholder="Digite seu usuário" />
+
+                <span asp-validation-for="UserName"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="Email"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="Email"
+                       class="form-control custom-input"
+                       placeholder="Digite seu e-mail" />
+
+                <span asp-validation-for="Email"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="Telefone"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="Telefone"
+                       class="form-control custom-input"
+                       placeholder="(11) 99999-9999" />
+
+                <span asp-validation-for="Telefone"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="Password"
+                       class="form-label fw-bold">
+                </label>
+
+                <input asp-for="Password"
+                       type="password"
+                       class="form-control custom-input"
+                       placeholder="Digite sua senha" />
+
+                <span asp-validation-for="Password"
+                      class="text-danger">
+                </span>
+
+                <div class="mb-4">
+
+                    <label asp-for="ConfirmPassword"
+                           class="form-label fw-bold">
+                    </label>
+
+                    <input asp-for="ConfirmPassword"
+                           type="password"
+                           class="form-control custom-input"
+                           placeholder="Confirme sua senha" />
+
+                    <span asp-validation-for="ConfirmPassword"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button type="submit"
+                    class="btn-register">
+                Registrar
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<style>
+
+    .login-card {
+        max-width: 550px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .register-image {
+        max-width: 120px;
+        border-radius: 50%;
+    }
+
+    .login-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .custom-input {
+        border-radius: 14px;
+        padding: 12px;
+    }
+
+        .custom-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 .2rem rgba(255,204,0,.15);
+        }
+
+    .btn-register {
+        width: 100%;
+        border: none;
+        padding: 14px;
+        border-radius: 14px;
+        background: linear-gradient(135deg,#28a745,#1f8f3c);
+        color: white;
+        font-weight: 700;
+        transition: .3s;
+    }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(40,167,69,.25);
+        }
+
+</style>

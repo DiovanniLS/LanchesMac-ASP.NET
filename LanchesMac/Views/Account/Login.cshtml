@@ -1,0 +1,147 @@
+﻿@model LoginViewModel
+
+<div class="container mt-5">
+
+    <div class="login-card">
+
+        <div class="text-center mb-4">
+
+            <h1 class="login-title">
+                🔐 Entrar
+            </h1>
+
+            <p class="text-muted">
+                Faça login para acessar sua conta
+            </p>
+        </div>
+
+        <form asp-controller="Account"
+              asp-action="Login"
+              method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="mb-4">
+                <label asp-for="UserName" class="form-label fw-bold"></label>
+
+                <input asp-for="UserName"
+                       class="form-control custom-input"
+                       placeholder="Digite seu usuário" />
+
+                <span asp-validation-for="UserName"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Password" class="form-label fw-bold"></label>
+
+                <input asp-for="Password"
+                       type="password"
+                       class="form-control custom-input"
+                       placeholder="Digite sua senha" />
+
+                <span asp-validation-for="Password"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <button type="submit"
+                    class="btn-login">
+                Entrar
+            </button>
+
+            <div class="register-section">
+
+                <p class="text-muted mb-3">
+                    Ainda não possui uma conta?
+                </p>
+
+                <a asp-controller="Account"
+                   asp-action="Register"
+                   class="btn-register">
+                    Criar Conta
+                </a>
+
+            </div>
+
+
+
+        </form>
+
+    </div>
+
+</div>
+
+<style>
+
+    .login-card {
+        max-width: 500px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .login-title {
+        font-weight: 700;
+        font-size: 2.5rem;
+    }
+
+    .custom-input {
+        border-radius: 14px;
+        padding: 12px;
+    }
+
+        .custom-input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 .2rem rgba(255,204,0,.15);
+        }
+
+    .btn-login {
+        width: 100%;
+        border: none;
+        padding: 14px;
+        border-radius: 14px;
+        background: linear-gradient(135deg,#ffcc00,#ffb300);
+        color: #222;
+        font-weight: 700;
+        transition: .3s;
+    }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,204,0,.3);
+        }
+
+    .register-section {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .btn-register {
+        display: inline-block;
+        text-decoration: none;
+        background: #fff;
+        color: #222;
+        border: 2px solid #ffcc00;
+        border-radius: 14px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+        .btn-register:hover {
+            background: #ffcc00;
+            color: #222;
+            transform: translateY(-2px);
+        }
+
+</style>

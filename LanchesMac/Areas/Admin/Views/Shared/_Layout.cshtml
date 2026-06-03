@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+
+        body {
+            background: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .admin-navbar {
+            background: linear-gradient(135deg,#1a1a1a,#2b2b2b);
+            box-shadow: 0 5px 15px rgba(0,0,0,.15);
+        }
+
+        .navbar-brand {
+            color: #ffcc00 !important;
+            font-size: 1.4rem;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin-right: 10px;
+            border-radius: 10px;
+            transition: .3s;
+        }
+
+            .nav-link:hover {
+                background: rgba(255,255,255,.1);
+                color: #ffcc00 !important;
+            }
+
+        .admin-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 80vh;
+            box-shadow: 0 10px 30px rgba(0,0,0,.06);
+        }
+
+        .admin-footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: #111;
+            color: #bbb;
+        }
+
+    </style>
+
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand-lg admin-navbar">
+
+            <div class="container">
+
+                <a class="navbar-brand fw-bold"
+                   asp-area="Admin"
+                   asp-controller="Admin"
+                   asp-action="Index">
+
+                    ⚙️ Painel Admin
+
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#adminMenu">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between"
+                     id="adminMenu">
+
+                    <div class="navbar-nav">
+
+                        <a class="nav-link"
+                           asp-area="Admin"
+                           asp-controller="AdminLanches"
+                           asp-action="Index">
+                            🍔 Produtos
+                        </a>
+
+                        <a class="nav-link"
+                           asp-area="Admin"
+                           asp-controller="AdminCategorias"
+                           asp-action="Index">
+                            📂 Categorias
+                        </a>
+
+                        <a class="nav-link"
+                           asp-area="Admin"
+                           asp-controller="AdminPedidos"
+                           asp-action="Index">
+                            📦 Pedidos
+                        </a>
+
+                    </div>
+
+                    <a asp-area=""
+                       asp-controller="Home"
+                       asp-action="Index"
+                       class="btn btn-warning btn-sm">
+
+                        🌐 Ver Site
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+    <div class="admin-container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="admin-footer">
+
+        <div class="container text-center">
+
+            © 2026 LanchesMac Admin
+
+        </div>
+
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

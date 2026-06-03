@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Administração";
+}
+
+<div class="text-center mt-5">
+
+    <h1 class="display-4">
+        ⚙️ Painel Administrativo
+    </h1>
+
+    <p class="lead text-muted">
+        Gerencie produtos, categorias e pedidos do LanchesMac.
+    </p>
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body text-center">
+
+                <h3>🍔</h3>
+
+                <h5>Produtos</h5>
+
+                <p>Gerencie os lanches cadastrados.</p>
+
+                <a asp-area="Admin"
+                   asp-controller="AdminLanches"
+                   asp-action="Index"
+                   class="btn btn-warning">
+
+                    Acessar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body text-center">
+
+                <h3>📂</h3>
+
+                <h5>Categorias</h5>
+
+                <p>Gerencie as categorias dos produtos.</p>
+
+                <a asp-area="Admin"
+                   asp-controller="AdminCategorias"
+                   asp-action="Index"
+                   class="btn btn-primary">
+
+                    Acessar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body text-center">
+
+                <h3>📦</h3>
+
+                <h5>Pedidos</h5>
+
+                <p>Visualize os pedidos realizados.</p>
+
+                <a asp-area="Admin"
+                   asp-controller="AdminPedidos"
+                   asp-action="Index"
+                   class="btn btn-success">
+
+                    Acessar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -148,33 +148,60 @@
                      id="navbarContent">
 
                     <div class="navbar-nav-custom">
-
+                            
                         <a class="nav-link"
-                           asp-area=""
                            asp-controller="Home"
                            asp-action="Index">
-
                             🏠 Home
-
                         </a>
 
                         <a class="nav-link"
-                           asp-area=""
                            asp-controller="Lanche"
                            asp-action="List">
-
                             🍟 Lanches
-
                         </a>
 
                         <a class="nav-link"
-                           asp-area=""
                            asp-controller="Contato"
                            asp-action="Index">
-
                             📞 Contato
-
                         </a>
+
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span class="text-light me-2">
+                                👋 @User.Identity.Name
+                            </span>
+
+                            <form asp-controller="Account"
+                                  asp-action="Logout"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="btn btn-outline-warning btn-sm">
+                                    Sair
+                                </button>
+
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-light btn-sm"
+                               asp-controller="Account"
+                               asp-action="Login">
+                                Entrar
+                            </a>
+
+                            <a class="btn btn-warning btn-sm"
+                               asp-controller="Account"
+                               asp-action="Register">
+                                Registrar
+                            </a>
+                        }
 
                     </div>
 
@@ -185,6 +212,17 @@
                         @await Component.InvokeAsync("CarrinhoCompraResumo")
 
                     </div>
+
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a class="nav-link"
+                           asp-area="Admin"
+                           asp-controller="Admin"
+                           asp-action="Index">
+                            ⚙️ Painel Admin
+                        </a>
+                    }
 
                 </div>
 

@@ -1,0 +1,135 @@
+﻿@model IEnumerable<LanchesMac.Models.Lanche>
+
+@{
+    ViewData["Title"] = "Gerenciar Lanches";
+}
+
+<div class="card shadow border-0 rounded-4">
+
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center p-4">
+
+        <h2 class="mb-0">🍔 Gerenciar Lanches</h2>
+
+        <a asp-action="Create"
+           class="btn btn-success">
+            ➕ Novo Lanche
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+                    <th>Imagem</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Preferido</th>
+                    <th>Estoque/QTD</th>
+                    <th>Ações</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            <img src="@item.ImagemThumbnailUrl"
+                                 width="60"
+                                 class="rounded shadow-sm" />
+                        </td>
+
+                        <td>
+                            <strong>@item.Nome</strong>
+                            <br />
+                            <small class="text-muted">
+                                @item.DescricaoCurta
+                            </small>
+                        </td>
+
+                        <td>
+                            @item.Categoria.CategoriaNome
+                        </td>
+
+                        <td>
+                            @item.Preco.ToString("C")
+                        </td>
+
+                        <td>
+                            @if (item.IsLanchePreferido)
+                            {
+                                <span class="badge bg-warning text-dark">
+                                    ⭐ Sim
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+                                    Não
+                                </span>
+                            }
+                        </td>
+
+                        <td>
+                            @if (item.QuantidadeEstoque > 0)
+                            {
+                                <span class="badge bg-success">
+                                    Disponível
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    Indisponível
+                                </span>
+                            }
+                            --
+                        @item.QuantidadeEstoque
+                        </td>
+
+                       
+
+                        <td>
+
+                            <div class="d-flex gap-2">
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.LancheId"
+                                   class="btn btn-outline-info btn-sm">
+                                    👁
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.LancheId"
+                                   class="btn btn-outline-warning btn-sm">
+                                    ✏
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.LancheId"
+                                   class="btn btn-outline-danger btn-sm">
+                                    🗑
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

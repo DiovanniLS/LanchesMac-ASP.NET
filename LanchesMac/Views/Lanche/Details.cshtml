@@ -97,26 +97,30 @@
 
                         </div>
 
-                        <button type="submit"
-                                class="cart-button border-0 w-100 mt-4">
-
-                            🛒 Adicionar ao Carrinho
-
-                        </button>
+                        
 
                     </form>
 
                     <!-- BOTÕES -->
                     <div class="buttons-wrapper">
 
-                        <a class="cart-button"
-                           asp-controller="CarrinhoCompra"
-                           asp-action="AdicionarItemNoCarrinhoCompra"
-                           asp-route-lancheId="@Model.LancheId">
+                        @if (Model.QuantidadeEstoque > 0)
+                        {
+                            <a class="cart-button"
+                               asp-controller="CarrinhoCompra"
+                               asp-action="AdicionarItemNoCarrinhoCompra"
+                               asp-route-lancheId="@Model.LancheId">
 
-                            🛒 Adicionar ao Carrinho
+                                🛒 Adicionar ao Carrinho
 
-                        </a>
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary" disabled>
+                                Sem estoque
+                            </button>
+                        }
 
                         <a class="back-button"
                            asp-controller="Lanche"
@@ -159,9 +163,14 @@
                 });
     }
 
+        const estoqueDisponivel = @Model.QuantidadeEstoque;
+
     function aumentar() {
-        quantidade++;
-        atualizarTela();
+
+        if (quantidade < estoqueDisponivel) {
+            quantidade++;
+            atualizarTela();
+        }
     }
 
     function diminuir() {

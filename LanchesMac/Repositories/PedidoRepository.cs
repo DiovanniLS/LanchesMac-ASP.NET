@@ -35,6 +35,18 @@ namespace LanchesMac.Repositories
                 };
                 _appDbContext.PedidosDetalhe.Add(pedidoDetail);
             }
+
+            foreach (var item in _carrinhoCompra.CarrinhoCompraItems)
+            {
+                item.Lanche.QuantidadeEstoque -= item.Quantidade;
+
+                if (item.Lanche.QuantidadeEstoque <= 0)
+                {
+                    item.Lanche.QuantidadeEstoque = 0;
+                    item.Lanche.EmEstoque = false;
+                }
+            }
+
             _appDbContext.SaveChanges();
         }
 
