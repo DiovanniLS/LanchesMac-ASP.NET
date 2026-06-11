@@ -1,0 +1,198 @@
+﻿@model IEnumerable<LanchesMac.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Relatório de Pedidos";
+}
+
+<div class="card shadow border-0 rounded-4">
+
+    ```
+    <div class="card-header bg-dark text-white p-4">
+
+        <h2 class="mb-0">
+            📊 Relatório de Pedidos por Período
+        </h2>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="get" class="row g-3 mb-4">
+
+            <div class="col-md-4">
+                <label class="form-label">
+                    Data Inicial
+                </label>
+
+                <input type="date"
+                       class="form-control"
+                       name="minDate"
+                       value="@ViewData["minDate"]" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">
+                    Data Final
+                </label>
+
+                <input type="date"
+                       class="form-control"
+                       name="maxDate"
+                       value="@ViewData["maxDate"]" />
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit"
+                        class="btn btn-success w-100">
+                    🔍 Filtrar Relatório
+                </button>
+            </div>
+
+        </form>
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4">
+
+                <div class="card border-primary">
+
+                    <div class="card-body text-center">
+
+                        <h6 class="text-muted">
+                            Total de Pedidos
+                        </h6>
+
+                        <h2 class="text-primary">
+                            @Model.Count()
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card border-warning">
+
+                    <div class="card-body text-center">
+
+                        <h6 class="text-muted">
+                            Total de Itens
+                        </h6>
+
+                        <h2 class="text-warning">
+                            @Model.Sum(p => p.TotalItensPedido)
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card border-success">
+
+                    <div class="card-body text-center">
+
+                        <h6 class="text-muted">
+                            Faturamento
+                        </h6>
+
+                        <h2 class="text-success">
+                            @Model.Sum(p => p.PedidoTotal).ToString("C")
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>#</th>
+                        <th>Cliente</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Total</th>
+                        <th>Itens</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    #@item.PedidoId
+                                </strong>
+                            </td>
+
+                            <td>
+                                @item.Nome
+                            </td>
+
+                            <td>
+                                @item.Email
+                            </td>
+
+                            <td>
+                                @item.Telefone
+                            </td>
+
+                            <td>
+                                <strong class="text-success">
+                                    @item.PedidoTotal.ToString("C")
+                                </strong>
+                            </td>
+
+                            <td>
+                                @item.TotalItensPedido
+                            </td>
+
+                            <td>
+
+                                @if (item.PedidoEntregueEm != null)
+                                {
+                                    <span class="badge bg-success">
+                                        Entregue
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Pendente
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    ```
+
+</div>

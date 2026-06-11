@@ -1,72 +1,278 @@
 ﻿@model LanchesMac.Models.Lanche
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do Lanche";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
 
-<div>
-    <h4>Lanche</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DescricaoCurta)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DescricaoCurta)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DescricaoDetalhada)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DescricaoDetalhada)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Preco)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Preco)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagemUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagemUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagemThumbnailUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagemThumbnailUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsLanchePreferido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsLanchePreferido)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmEstoque)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmEstoque)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categoria.CategoriaNome)
-        </dd>
-    </dl>
+    <div class="details-card">
+
+        <div class="text-center mb-5">
+
+            <img src="~/images/produtos/@Model.ImagemUrl"
+                 asp-append-version="true"
+                 class="product-image mb-3"
+                 alt="@Model.Nome" />
+
+            <h1 class="page-title">
+                🍔 @Model.Nome
+            </h1>
+
+            <p class="text-muted">
+                Visualização completa do produto
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <div class="info-card">
+
+                    <h4 class="section-title">
+                        📋 Informações Gerais
+                    </h4>
+
+                    <div class="info-item">
+                        <span class="label">Nome</span>
+                        <span>@Model.Nome</span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Categoria</span>
+                        <span>@Model.Categoria.CategoriaNome</span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Preço</span>
+                        <span class="price">
+                            @Model.Preco.ToString("C")
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="info-card">
+
+                    <h4 class="section-title">
+                        📦 Estoque
+                    </h4>
+
+                    <div class="info-item">
+                        <span class="label">Disponibilidade</span>
+
+                        <td>
+                            @if (Model.QuantidadeEstoque <= 0)
+                            {
+                                <span class="badge bg-danger fs-6">
+                                    Sem Estoque
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success fs-6">
+                                    Em Estoque
+                                </span>
+                            }
+
+                            <br />
+
+                            <small>
+                                Qtd: @Model.QuantidadeEstoque
+                            </small>
+                        </td>
+
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Preferido</span>
+
+                        @if (Model.IsLanchePreferido)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                ⭐ Sim
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">
+                                Não
+                            </span>
+                        }
+
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Quantidade</span>
+                        <span>@Model.QuantidadeEstoque unidades</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="info-card mt-4">
+
+            <h4 class="section-title">
+                📝 Descrição Curta
+            </h4>
+
+            <p class="mb-0">
+                @Model.DescricaoCurta
+            </p>
+
+        </div>
+
+        <div class="info-card mt-4">
+
+            <h4 class="section-title">
+                📖 Descrição Detalhada
+            </h4>
+
+            <p class="mb-0">
+                @Model.DescricaoDetalhada
+            </p>
+
+        </div>
+
+        <div class="info-card mt-4">
+
+            <h4 class="section-title">
+                🖼 URLs das Imagens
+            </h4>
+
+            <div class="info-item">
+                <span class="label">Imagem Principal</span>
+                <span>@Model.ImagemUrl</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Thumbnail</span>
+                <span>@Model.ImagemThumbnailUrl</span>
+            </div>
+
+        </div>
+
+        <div class="buttons-wrapper mt-4">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.LancheId"
+               class="btn-edit">
+                ✏️ Editar
+            </a>
+
+            <a asp-action="Index"
+               class="btn-back">
+                ← Voltar
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.LancheId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<style>
+
+    .details-card {
+        max-width: 1100px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .product-image {
+        width: 220px;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 25px;
+        height: 100%;
+    }
+
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+    .label {
+        font-weight: 700;
+        color: #555;
+    }
+
+    .price {
+        color: #198754;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    .buttons-wrapper {
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn-edit,
+    .btn-back {
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        padding: 14px;
+        border-radius: 14px;
+        font-weight: 700;
+        transition: .3s;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg,#0d6efd,#0b5ed7);
+        color: white;
+    }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+    .btn-back {
+        background: #f1f3f5;
+        color: #333;
+    }
+
+        .btn-back:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+</style>

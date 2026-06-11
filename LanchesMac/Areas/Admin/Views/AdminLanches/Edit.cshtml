@@ -55,14 +55,38 @@
                     <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label asp-for="ImagemUrl" class="form-label fw-bold"></label>
-                    <input asp-for="ImagemUrl" class="form-control custom-input" />
-                </div>
+                <div class="row">
 
-                <div class="col-md-6 mb-3">
-                    <label asp-for="ImagemThumbnailUrl" class="form-label fw-bold"></label>
-                    <input asp-for="ImagemThumbnailUrl" class="form-control custom-input" />
+                    <div class="col-md-6">
+                        <label asp-for="ImagemUrl" class="form-label fw-bold">
+                            Imagem Principal
+                        </label>
+
+                        <select asp-for="ImagemUrl" class="form-select">
+                            <option value="">Selecione uma imagem</option>
+
+                            @foreach (var img in ViewBag.Imagens)
+                            {
+                                <option value="@img">@img</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ImagemThumbnailUrl" class="form-label fw-bold">
+                            Thumbnail
+                        </label>
+
+                        <select asp-for="ImagemThumbnailUrl" class="form-select">
+                            <option value="">Selecione uma thumbnail</option>
+
+                            @foreach (var img in ViewBag.Imagens)
+                            {
+                                <option value="@img">@img</option>
+                            }
+                        </select>
+                    </div>
+
                 </div>
 
                 <div class="col-md-6 mb-3">

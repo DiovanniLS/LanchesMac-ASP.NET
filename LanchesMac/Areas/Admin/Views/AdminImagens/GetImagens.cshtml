@@ -1,0 +1,67 @@
+﻿@model LanchesMac.Models.FileManagerModel
+
+@{
+    ViewData["Title"] = "Imagens";
+}
+
+<div class="card shadow border-0 rounded-4">
+
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+
+        <h2 class="mb-0">🖼️ Imagens dos Produtos</h2>
+
+        <a asp-action="Index"
+           class="btn btn-warning">
+            ⬆️ Upload
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        @if (ViewData["Erro"] != null)
+        {
+            <div class="alert alert-warning">
+                @ViewData["Erro"]
+            </div>
+        }
+
+        <div class="row">
+
+            @foreach (var arquivo in Model.Files)
+            {
+                <div class="col-md-3 mb-4">
+
+                    <div class="card h-100 shadow-sm">
+
+                        <img src="/@Model.PathImagesProduto/@arquivo.Name"
+                             class="card-img-top"
+                             style="height:200px;object-fit:cover;" />
+
+                        <div class="card-body text-center">
+
+                            <small class="d-block mb-2">
+                                @arquivo.Name
+                            </small>
+
+                            <a asp-action="DeleteFile"
+                               asp-route-fname="@arquivo.Name"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Deseja excluir esta imagem?')">
+
+                                🗑 Excluir
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Resultado Upload";
+}
+
+<div class="card shadow border-0 rounded-4">
+
+    ```
+    <div class="card-header bg-success text-white">
+        <h3 class="mb-0">✅ Upload Concluído</h3>
+    </div>
+
+    <div class="card-body">
+
+        @if (ViewData["Resultado"] != null)
+        {
+            <div class="alert alert-success">
+                @ViewData["Resultado"]
+            </div>
+        }
+
+        @if (ViewBag.Arquivos != null)
+        {
+            <ul class="list-group">
+
+                @foreach (var arquivo in ViewBag.Arquivos)
+                {
+                    <li class="list-group-item">
+                        @arquivo
+                    </li>
+                }
+
+            </ul>
+        }
+
+        <a asp-action="Index"
+           class="btn btn-secondary mt-3">
+            ← Voltar
+        </a>
+
+    </div>
+    ```
+
+</div>

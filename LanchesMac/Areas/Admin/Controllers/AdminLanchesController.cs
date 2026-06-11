@@ -1,30 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LanchesMac.Context;
+using LanchesMac.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LanchesMac.Context;
-using LanchesMac.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace LanchesMac.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminLanchesController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public AdminLanchesController(AppDbContext context)
+        public AdminLanchesController(
+    AppDbContext context,
+    IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Admin/AdminLanches
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string filtro, int? page)
         {
-            var appDbContext = _context.Lanches.Include(l => l.Categoria);
-            return View(await appDbContext.ToListAsync());
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+
+            var lanches = _context.Lanches
+                .Include(l => l.Categoria)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                lanches = lanches.Where(l =>
+                    l.Nome.Contains(filtro) ||
+                    l.DescricaoCurta.Contains(filtro) ||
+                    l.Categoria.CategoriaNome.Contains(filtro));
+            }
+
+            return View(
+                lanches
+                    .OrderBy(l => l.Nome)
+                    .ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/AdminLanches/Details/5
@@ -47,9 +72,16 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminLanches/Create
+        // GET: Admin/AdminLanches/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome");
+            ViewData["CategoriaId"] = new SelectList(
+                _context.Categorias,
+                "CategoriaId",
+                "CategoriaNome");
+
+            CarregarImagens();
+
             return View();
         }
 
@@ -57,41 +89,60 @@ namespace LanchesMac.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LancheId,Nome,DescricaoCurta,DescricaoDetalhada,Preco,ImagemUrl,ImagemThumbnailUrl,IsLanchePreferido,EmEstoque,QuantidadeEstoque,CategoriaId")] Lanche lanche)
+        public async Task<IActionResult> Create(Lanche lanche,IFormFile? novaImagem,IFormFile? novaThumbnail)
         {
             if (ModelState.IsValid)
             {
+                var imagem = await SalvarImagem(novaImagem);
+                var thumbnail = await SalvarImagem(novaThumbnail);
+
+                if (!string.IsNullOrEmpty(imagem))
+                    lanche.ImagemUrl = imagem;
+
+                if (!string.IsNullOrEmpty(thumbnail))
+                    lanche.ImagemThumbnailUrl = thumbnail;
+
                 _context.Add(lanche);
+
                 await _context.SaveChangesAsync();
-                if (lanche.QuantidadeEstoque <= 0)
-                {
-                    lanche.EmEstoque = false;
-                }
-                else
-                {
-                    lanche.EmEstoque = true;
-                }
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+
+            ViewData["CategoriaId"] = new SelectList(
+                _context.Categorias,
+                "CategoriaId",
+                "CategoriaNome",
+                lanche.CategoriaId);
+
+            CarregarImagens();
+
             return View(lanche);
         }
 
         // GET: Admin/AdminLanches/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Lanches == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var lanche = await _context.Lanches.FindAsync(id);
+
             if (lanche == null)
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+
+            ViewData["CategoriaId"] = new SelectList(
+                _context.Categorias,
+                "CategoriaId",
+                "CategoriaNome",
+                lanche.CategoriaId);
+
+            CarregarImagens();
+
             return View(lanche);
         }
 
@@ -137,6 +188,8 @@ namespace LanchesMac.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+
+            CarregarImagens();
             return View(lanche);
         }
 
@@ -181,6 +234,45 @@ namespace LanchesMac.Areas.Admin.Controllers
         private bool LancheExists(int id)
         {
           return _context.Lanches.Any(e => e.LancheId == id);
+        }
+
+        private void CarregarImagens()
+        {
+            var pastaImagens = Path.Combine(
+                _hostingEnvironment.WebRootPath,
+                "images/produtos");
+
+            ViewBag.Imagens = Directory.Exists(pastaImagens)
+                ? Directory.GetFiles(pastaImagens)
+                    .Select(Path.GetFileName)
+                    .ToList()
+                : new List<string>();
+        }
+
+
+        private async Task<string?> SalvarImagem(IFormFile? arquivo)
+        {
+            if (arquivo == null || arquivo.Length == 0)
+                return null;
+
+            var pastaImagens = Path.Combine(
+                _hostingEnvironment.WebRootPath,
+                "images/produtos");
+
+            Directory.CreateDirectory(pastaImagens);
+
+            var nomeArquivo = $"{Guid.NewGuid()}{Path.GetExtension(arquivo.FileName)}";
+
+            var caminhoCompleto = Path.Combine(
+                pastaImagens,
+                nomeArquivo);
+
+            using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+            {
+                await arquivo.CopyToAsync(stream);
+            }
+
+            return nomeArquivo;
         }
     }
 }

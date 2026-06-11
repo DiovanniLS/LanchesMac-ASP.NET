@@ -20,7 +20,7 @@ namespace LanchesMac.Migrations
                 .HasAnnotation("ProductVersion", "6.0.35")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("LanchesMac.Models.CarrinhoCompraItem", b =>
                 {
@@ -28,7 +28,7 @@ namespace LanchesMac.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarrinhoCompraItemId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarrinhoCompraItemId"));
 
                     b.Property<string>("CarrinhoCompraId")
                         .HasMaxLength(200)
@@ -44,7 +44,7 @@ namespace LanchesMac.Migrations
 
                     b.HasIndex("LancheId");
 
-                    b.ToTable("CarrinhoCompraItens");
+                    b.ToTable("CarrinhoCompraItens", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.Categoria", b =>
@@ -53,7 +53,7 @@ namespace LanchesMac.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"));
 
                     b.Property<string>("CategoriaNome")
                         .IsRequired()
@@ -67,7 +67,7 @@ namespace LanchesMac.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.Lanche", b =>
@@ -76,7 +76,7 @@ namespace LanchesMac.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LancheId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LancheId"));
 
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
@@ -120,7 +120,7 @@ namespace LanchesMac.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("Lanches");
+                    b.ToTable("Lanches", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.Pedido", b =>
@@ -129,7 +129,7 @@ namespace LanchesMac.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PedidoId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PedidoId"));
 
                     b.Property<string>("Cep")
                         .IsRequired()
@@ -187,7 +187,7 @@ namespace LanchesMac.Migrations
 
                     b.HasKey("PedidoId");
 
-                    b.ToTable("Pedidos");
+                    b.ToTable("Pedidos", (string)null);
                 });
 
             modelBuilder.Entity("LanchesMac.Models.PedidoDetalhe", b =>
@@ -196,7 +196,7 @@ namespace LanchesMac.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PedidoDetalheId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PedidoDetalheId"));
 
                     b.Property<int>("LancheId")
                         .HasColumnType("int");
@@ -216,7 +216,7 @@ namespace LanchesMac.Migrations
 
                     b.HasIndex("PedidoId");
 
-                    b.ToTable("PedidosDetalhe");
+                    b.ToTable("PedidosDetalhe", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -252,7 +252,7 @@ namespace LanchesMac.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -342,7 +342,7 @@ namespace LanchesMac.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");

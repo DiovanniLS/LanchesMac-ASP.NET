@@ -104,6 +104,32 @@
                            asp-action="Index">
                             📦 Pedidos
                         </a>
+                        <a class="nav-link"
+                           asp-area="Admin"
+                           asp-controller="AdminRelatorioVendas"
+                           asp-action="Index">
+                            📊 Relatórios
+                        </a>
+                        <a class="nav-link"
+                           asp-area="Admin"
+                           asp-controller="AdminImagens"
+                           asp-action="Index">
+                            🖼️ Imagens
+                        </a>
+
+                        <!-- Graficos-->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Gráficos de Vendas
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="AdminGrafico" asp-action="Index">Vendas Anual</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="AdminGrafico" asp-action="VendasMensal" asp-route-dias="30">Vendas Mensais</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="AdminGrafico" asp-action="VendasSemanal" asp-route-dias="7">Vendas Semanais</a>
+                            </div>
+                        </div>
+                        <!--fim menu grafico-->
+
 
                     </div>
 

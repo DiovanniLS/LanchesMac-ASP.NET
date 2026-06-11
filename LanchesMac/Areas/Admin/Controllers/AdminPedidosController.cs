@@ -1,6 +1,7 @@
 ﻿using LanchesMac.Context;
 using LanchesMac.Models;
 using LanchesMac.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList.Extensions;
 
 namespace LanchesMac.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminPedidosController : Controller
     {
         private readonly AppDbContext _context;
@@ -24,26 +27,40 @@ namespace LanchesMac.Areas.Admin.Controllers
             _pedidoRepository = pedidoRepository;
         }
 
-        // GET: Admin/AdminPedidoes
-        public async Task<IActionResult> Index()
+        // GET: Admin/AdminPedidos
+        public async Task<IActionResult> Index(string filtro,int? page)
         {
-              return View(await _context.Pedidos.ToListAsync());
+            int pageSize = 6;
+            int pageNumber = page ?? 1;
+
+
+            var pedidos = _context.Pedidos.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                pedidos = pedidos.Where(p =>
+                    p.Nome.Contains(filtro) ||
+                    p.Sobrenome.Contains(filtro) ||
+                    p.Email.Contains(filtro));
+            }
+
+
+            return View(pedidos.OrderBy(p => p.PedidoEnviado).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/AdminPedidoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Pedidos == null)
-            {
+            if (id == null)
                 return NotFound();
-            }
 
             var pedido = await _context.Pedidos
-                .FirstOrDefaultAsync(m => m.PedidoId == id);
+                .Include(p => p.PedidoItens)
+                .ThenInclude(pi => pi.Lanche)
+                .FirstOrDefaultAsync(p => p.PedidoId == id);
+
             if (pedido == null)
-            {
                 return NotFound();
-            }
 
             return View(pedido);
         }

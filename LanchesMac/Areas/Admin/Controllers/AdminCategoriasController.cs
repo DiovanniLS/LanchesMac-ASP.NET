@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LanchesMac.Context;
+using LanchesMac.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LanchesMac.Context;
-using LanchesMac.Models;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using X.PagedList.Extensions;
 namespace LanchesMac.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminCategoriasController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,13 +23,21 @@ namespace LanchesMac.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminCategorias
-        public async Task<IActionResult> Index()
-        {
-              return View(await _context.Categorias.ToListAsync());
-        }
 
-        // GET: Admin/AdminCategorias/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+public IActionResult Index(int? page)
+    {
+        int pageSize = 10;
+        int pageNumber = page ?? 1;
+
+        var categorias = _context.Categorias
+            .OrderBy(c => c.CategoriaNome);
+
+        return View(categorias.ToPagedList(pageNumber, pageSize));
+    }
+
+    // GET: Admin/AdminCategorias/Details/5
+    public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Categorias == null)
             {

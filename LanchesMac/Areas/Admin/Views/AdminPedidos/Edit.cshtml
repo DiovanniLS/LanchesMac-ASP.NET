@@ -1,81 +1,175 @@
 ﻿@model LanchesMac.Models.Pedido
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Pedido";
 }
 
-<h1>Edit</h1>
+<div class="container mt-5">
 
-<h4>Pedido</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    ```
+    <div class="edit-card">
+
+        <div class="text-center mb-4">
+
+            <h1 class="page-title">
+                ✏️ Editar Pedido
+            </h1>
+
+            <p class="text-muted">
+                Atualize as informações do pedido
+            </p>
+
+        </div>
+
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger">
+            </div>
+
             <input type="hidden" asp-for="PedidoId" />
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Nome" class="form-label fw-bold"></label>
+                    <input asp-for="Nome" class="form-control custom-input" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Sobrenome" class="form-label fw-bold"></label>
+                    <input asp-for="Sobrenome" class="form-control custom-input" />
+                    <span asp-validation-for="Sobrenome" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Telefone" class="form-label fw-bold"></label>
+                    <input asp-for="Telefone" class="form-control custom-input" />
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email" class="form-label fw-bold"></label>
+                    <input asp-for="Email" class="form-control custom-input" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Endereco1" class="form-label fw-bold"></label>
+                    <input asp-for="Endereco1" class="form-control custom-input" />
+                    <span asp-validation-for="Endereco1" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Endereco2" class="form-label fw-bold"></label>
+                    <input asp-for="Endereco2" class="form-control custom-input" />
+                    <span asp-validation-for="Endereco2" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Cep" class="form-label fw-bold"></label>
+                    <input asp-for="Cep" class="form-control custom-input" />
+                    <span asp-validation-for="Cep" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Cidade" class="form-label fw-bold"></label>
+                    <input asp-for="Cidade" class="form-control custom-input" />
+                    <span asp-validation-for="Cidade" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Estado" class="form-label fw-bold"></label>
+                    <input asp-for="Estado" class="form-control custom-input" />
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PedidoEnviado" class="form-label fw-bold"></label>
+                    <input asp-for="PedidoEnviado"
+                           class="form-control custom-input" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PedidoEntregueEm" class="form-label fw-bold"></label>
+                    <input asp-for="PedidoEntregueEm"
+                           class="form-control custom-input" />
+                </div>
+
             </div>
-            <div class="form-group">
-                <label asp-for="Sobrenome" class="control-label"></label>
-                <input asp-for="Sobrenome" class="form-control" />
-                <span asp-validation-for="Sobrenome" class="text-danger"></span>
+
+            <div class="buttons-wrapper">
+
+                <button type="submit" class="btn-save">
+                    💾 Salvar Alterações
+                </button>
+
+                <a asp-action="Index"
+                   class="btn-back">
+                    ← Voltar
+                </a>
+
             </div>
-            <div class="form-group">
-                <label asp-for="Endereco1" class="control-label"></label>
-                <input asp-for="Endereco1" class="form-control" />
-                <span asp-validation-for="Endereco1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Endereco2" class="control-label"></label>
-                <input asp-for="Endereco2" class="form-control" />
-                <span asp-validation-for="Endereco2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cep" class="control-label"></label>
-                <input asp-for="Cep" class="form-control" />
-                <span asp-validation-for="Cep" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cidade" class="control-label"></label>
-                <input asp-for="Cidade" class="form-control" />
-                <span asp-validation-for="Cidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
-                <span asp-validation-for="Telefone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PedidoEnviado" class="control-label"></label>
-                <input asp-for="PedidoEnviado" class="form-control" />
-                <span asp-validation-for="PedidoEnviado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PedidoEntregueEm" class="control-label"></label>
-                <input asp-for="PedidoEntregueEm" class="form-control" />
-                <span asp-validation-for="PedidoEntregueEm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
         </form>
+
     </div>
+    ```
+
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<style>
 
+    .edit-card {
+        max-width: 1000px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .page-title {
+        font-size: 2.4rem;
+        font-weight: 700;
+    }
+
+    .custom-input {
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+        .custom-input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 .2rem rgba(13,110,253,.15);
+        }
+
+    .buttons-wrapper {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .btn-save,
+    .btn-back {
+        flex: 1;
+        text-align: center;
+        padding: 14px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        border: none;
+    }
+
+    .btn-save {
+        background: linear-gradient(135deg,#0d6efd,#0b5ed7);
+        color: white;
+    }
+
+    .btn-back {
+        background: #f1f3f5;
+        color: #333;
+    }
+
+</style>

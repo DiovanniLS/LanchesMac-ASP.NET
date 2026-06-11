@@ -1,0 +1,79 @@
+﻿<div class="card shadow border-0 rounded-4">
+
+    ```
+    <div class="card-header bg-dark text-white p-4">
+        <h3 class="mb-0">
+            📊 Relatório de Vendas
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="RelatorioVendasSimples" method="get">
+
+            <div class="row g-4">
+
+                <div class="col-md-5">
+
+                    <label class="form-label fw-bold">
+                        Data Inicial
+                    </label>
+
+                    <input type="date"
+                           name="minDate"
+                           class="form-control form-control-lg" />
+
+                </div>
+
+                <div class="col-md-5">
+
+                    <label class="form-label fw-bold">
+                        Data Final
+                    </label>
+
+                    <input type="date"
+                           name="maxDate"
+                           class="form-control form-control-lg" />
+
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <button type="submit"
+                            class="btn btn-success btn-lg w-100">
+                        🔍 Gerar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+    
+    <style>
+        .card {
+            overflow: hidden;
+        }
+
+        .card-header {
+            border: none;
+        }
+
+        .form-control {
+            border-radius: 12px;
+        }
+
+        .btn-success {
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+            .btn-success:hover {
+                transform: translateY(-2px);
+                transition: .2s;
+            }
+    </style>
+
+</div>

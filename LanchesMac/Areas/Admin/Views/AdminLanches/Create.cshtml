@@ -1,69 +1,347 @@
 ﻿@model LanchesMac.Models.Lanche
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo Lanche";
 }
 
-<h1>Create</h1>
+<div class="container mt-5">
 
-<h4>Lanche</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescricaoCurta" class="control-label"></label>
-                <input asp-for="DescricaoCurta" class="form-control" />
-                <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescricaoDetalhada" class="control-label"></label>
-                <input asp-for="DescricaoDetalhada" class="form-control" />
-                <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Preco" class="control-label"></label>
-                <input asp-for="Preco" class="form-control" />
-                <span asp-validation-for="Preco" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemUrl" class="control-label"></label>
-                <input asp-for="ImagemUrl" class="form-control" />
-                <span asp-validation-for="ImagemUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemThumbnailUrl" class="control-label"></label>
-                <input asp-for="ImagemThumbnailUrl" class="form-control" />
-                <span asp-validation-for="ImagemThumbnailUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsLanchePreferido" /> @Html.DisplayNameFor(model => model.IsLanchePreferido)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EmEstoque" /> @Html.DisplayNameFor(model => model.EmEstoque)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class ="form-control" asp-items="ViewBag.CategoriaId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-success text-white p-4 rounded-top-4">
+            <h2 class="mb-0">
+                🍔 Novo Lanche
+            </h2>
+            <small>Cadastre um novo item do cardápio</small>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form asp-action="Create" enctype="multipart/form-data">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Nome" class="form-label fw-bold"></label>
+                        <input asp-for="Nome" class="form-control form-control-lg" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Preco" class="form-label fw-bold"></label>
+                        <input asp-for="Preco" class="form-control form-control-lg" />
+                        <span asp-validation-for="Preco" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DescricaoCurta" class="form-label fw-bold"></label>
+                    <input asp-for="DescricaoCurta" class="form-control" />
+                    <span asp-validation-for="DescricaoCurta" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DescricaoDetalhada" class="form-label fw-bold"></label>
+                    <textarea asp-for="DescricaoDetalhada"
+                              rows="4"
+                              class="form-control"></textarea>
+                    <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- IMAGEM PRINCIPAL -->
+                    <div class="col-lg-6">
+
+                        <div class="card h-100 shadow-sm border-0">
+
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">🖼️ Imagem Principal</h5>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="text-center mb-3">
+                                    <img id="previewImagemPrincipal"
+                                         src="/images/produtos/sem-imagem.png"
+                                         class="img-thumbnail"
+                                         style="max-height:160px; object-fit:cover;" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="ImagemUrl"
+                                           class="form-label fw-bold">
+                                        Selecionar imagem existente
+                                    </label>
+
+                                    <select asp-for="ImagemUrl"
+                                            id="imagemPrincipalSelect"
+                                            class="form-select">
+
+                                        <option value="">
+                                            Escolha uma imagem...
+                                        </option>
+
+                                        @foreach (var img in ViewBag.Imagens)
+                                        {
+                                            <option value="@img">@img</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="form-label fw-bold">
+                                        Ou enviar nova imagem
+                                    </label>
+
+                                    <input type="file"
+                                           id="novaImagem"
+                                           name="novaImagem"
+                                           class="form-control"
+                                           accept=".jpg,.jpeg,.png,.gif" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- THUMBNAIL -->
+                    <div class="col-lg-6">
+
+                        <div class="card h-100 shadow-sm border-0">
+
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">📱 Miniatura</h5>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="text-center mb-3">
+                                    <img id="previewThumbnail"
+                                         src="/images/produtos/sem-imagem.png"
+                                         class="img-thumbnail"
+                                         style="max-height:160px; object-fit:cover;" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="ImagemThumbnailUrl"
+                                           class="form-label fw-bold">
+                                        Selecionar miniatura existente
+                                    </label>
+
+                                    <select asp-for="ImagemThumbnailUrl"
+                                            id="thumbnailSelect"
+                                            class="form-select">
+
+                                        <option value="">
+                                            Escolha uma miniatura...
+                                        </option>
+
+                                        @foreach (var img in ViewBag.Imagens)
+                                        {
+                                            <option value="@img">@img</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="form-label fw-bold">
+                                        Ou enviar nova miniatura
+                                    </label>
+
+                                    <input type="file"
+                                           id="novaThumbnail"
+                                           name="novaThumbnail"
+                                           class="form-control"
+                                           accept=".jpg,.jpeg,.png,.gif" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr class="my-4" />
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="CategoriaId"
+                               class="form-label fw-bold">
+                        </label>
+
+                        <select asp-for="CategoriaId"
+                                asp-items="ViewBag.CategoriaId"
+                                class="form-select">
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="QuantidadeEstoque"
+                               class="form-label fw-bold">
+                            Quantidade em Estoque
+                        </label>
+
+                        <input asp-for="QuantidadeEstoque"
+                               type="number"
+                               min="0"
+                               class="form-control" />
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+
+                    <div class="col-md-6">
+
+                        <div class="card border-0 bg-light">
+
+                            <div class="card-body">
+
+                                <div class="form-check form-switch">
+                                    <input asp-for="IsLanchePreferido"
+                                           class="form-check-input" />
+
+                                    <label asp-for="IsLanchePreferido"
+                                           class="form-check-label fw-bold">
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="card border-0 bg-light">
+
+                            <div class="card-body">
+
+                                <div class="form-check form-switch">
+                                    <input asp-for="EmEstoque"
+                                           class="form-check-input" />
+
+                                    <label asp-for="EmEstoque"
+                                           class="form-check-label fw-bold">
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="d-flex gap-2 mt-4">
+
+                    <button type="submit"
+                            class="btn btn-success btn-lg">
+                        💾 Salvar
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary btn-lg">
+                        ← Voltar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+<style>
+    .img-thumbnail {
+        border: 1px solid #dee2e6;
+        transition: .2s;
+    }
 
+        .img-thumbnail:hover {
+            transform: scale(1.02);
+        }
+</style>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+            document
+        .getElementById("imagemPrincipalSelect")
+        ?.addEventListener("change", function () {
+
+            if (!this.value) return;
+
+            document.getElementById("novaImagem").value = "";
+
+            document.getElementById("previewImagemPrincipal").src =
+                `/images/produtos/${this.value}`;
+        });
+
+            document
+        .getElementById("thumbnailSelect")
+        ?.addEventListener("change", function () {
+
+            if (!this.value) return;
+
+            document.getElementById("novaThumbnail").value = "";
+
+            document.getElementById("previewThumbnail").src =
+                `/images/produtos/${this.value}`;
+        });
+                document
+            .getElementById("novaImagem")
+            ?.addEventListener("change", function () {
+
+                const arquivo = this.files[0];
+
+                if (!arquivo) return;
+
+                // limpa o select
+                document.getElementById("imagemPrincipalSelect").value = "";
+
+                // mostra preview do arquivo local
+                document.getElementById("previewImagemPrincipal").src =
+                    URL.createObjectURL(arquivo);
+            });
+
+        document
+            .getElementById("novaThumbnail")
+            ?.addEventListener("change", function () {
+
+                const arquivo = this.files[0];
+
+                if (!arquivo) return;
+
+                // limpa o select
+                document.getElementById("thumbnailSelect").value = "";
+
+                // mostra preview do arquivo local
+                document.getElementById("previewThumbnail").src =
+                    URL.createObjectURL(arquivo);
+            });
+
+    </script>
+}

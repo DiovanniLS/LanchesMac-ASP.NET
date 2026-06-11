@@ -1,0 +1,167 @@
+﻿@{
+    ViewData["Title"] = "Vendas - Últimos 7 Dias";
+}
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div class="container mt-4">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h2 class="mb-1">
+                        📈 Tendência de Vendas
+                    </h2>
+
+                    <small>
+                        Desempenho dos lanches na última semana
+                    </small>
+                </div>
+
+                <span class="badge bg-light text-primary fs-6">
+                    Últimos 7 dias
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div id="loading" class="text-center py-5">
+
+                <div class="spinner-border text-primary mb-3"></div>
+
+                <p class="text-muted">
+                    Carregando gráfico...
+                </p>
+
+            </div>
+
+            <div id="chart_div"
+                 style="width:100%; height:550px;">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    google.charts.load('current', {
+        packages: ['corechart']
+    });
+
+    google.charts.setOnLoadCallback(CarregaDados);
+
+    function CarregaDados() {
+
+        $.ajax({
+
+            url: '@Url.Action("VendasLanches", "AdminGrafico")',
+
+            data: {
+                dias: 7
+            },
+
+            dataType: "json",
+
+            type: "GET",
+
+            success: function (data) {
+
+                $("#loading").hide();
+
+                GraficoVendasLanches(data);
+            },
+
+            error: function () {
+
+                $("#loading").hide();
+
+                toastr.error(
+                    "Não foi possível carregar os dados."
+                );
+            }
+        });
+    }
+
+    function GraficoVendasLanches(data) {
+
+        let dataArray = [
+            ['Lanche', 'Quantidade', 'Valor Total (R$)']
+        ];
+
+        $.each(data, function (i, item) {
+
+            dataArray.push([
+                item.lancheNome,
+                item.lanchesQuantidade,
+                item.lanchesValorTotal
+            ]);
+
+        });
+
+        let chartData =
+            google.visualization.arrayToDataTable(dataArray);
+
+            let options = {
+
+        title: 'Vendas por Lanche',
+
+        titleTextStyle: {
+            fontSize: 20,
+            bold: true
+        },
+
+        legend: {
+            position: 'bottom'
+        },
+
+        colors: [
+            '#0d6efd',
+            '#ffc107'
+        ],
+
+        chartArea: {
+            width: '80%',
+            height: '70%'
+        },
+
+        animation: {
+            startup: true,
+            duration: 1500,
+            easing: 'out'
+        },
+
+        hAxis: {
+            title: 'Lanches'
+        },
+
+        vAxis: {
+            title: 'Quantidade / Valor (R$)',
+            minValue: 0
+        },
+
+        backgroundColor: 'transparent'
+    };
+
+        const chart =
+    new google.visualization.ColumnChart(
+        document.getElementById('chart_div')
+    );
+
+        chart.draw(chartData, options);
+
+        window.addEventListener('resize', () => {
+            chart.draw(chartData, options);
+        });
+    }
+
+</script>

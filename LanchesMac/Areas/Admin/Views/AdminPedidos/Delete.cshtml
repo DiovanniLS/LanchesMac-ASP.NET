@@ -1,87 +1,195 @@
 ﻿@model LanchesMac.Models.Pedido
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Excluir Pedido";
 }
 
-<h1>Delete</h1>
+<div class="container mt-5">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Pedido</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sobrenome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sobrenome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Endereco1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Endereco1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Endereco2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Endereco2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cep)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cep)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PedidoEnviado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PedidoEnviado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PedidoEntregueEm)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PedidoEntregueEm)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="PedidoId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    ```
+    <div class="delete-card">
+
+        <div class="text-center">
+
+            <div class="warning-icon">
+                ⚠️
+            </div>
+
+            <h1 class="page-title">
+                Excluir Pedido
+            </h1>
+
+            <p class="warning-text">
+                Tem certeza que deseja excluir este pedido?
+                Esta ação não poderá ser desfeita.
+            </p>
+
+        </div>
+
+        <div class="info-card mt-4">
+
+            <h4 class="section-title">
+                📦 Pedido #@Model.PedidoId
+            </h4>
+
+            <div class="info-item">
+                <span class="label">Cliente</span>
+                <span>@Model.Nome @Model.Sobrenome</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Telefone</span>
+                <span>@Model.Telefone</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">E-mail</span>
+                <span>@Model.Email</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Endereço</span>
+                <span>@Model.Endereco1</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Cidade</span>
+                <span>@Model.Cidade - @Model.Estado</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">CEP</span>
+                <span>@Model.Cep</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Data do Pedido</span>
+                <span>
+                    @Model.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")
+                </span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Total</span>
+                <span class="total-value">
+                    @Model.PedidoTotal.ToString("C")
+                </span>
+            </div>
+
+        </div>
+
+        <form asp-action="Delete" class="mt-4">
+
+            <input type="hidden" asp-for="PedidoId" />
+
+            <div class="buttons-wrapper">
+
+                <button type="submit" class="btn-delete">
+                    🗑️ Confirmar Exclusão
+                </button>
+
+                <a asp-action="Index"
+                   class="btn-back">
+                    ← Cancelar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+    ```
+
 </div>
+
+<style>
+
+    .delete-card {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .warning-icon {
+        font-size: 4rem;
+        margin-bottom: 10px;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #dc3545;
+    }
+
+    .warning-text {
+        color: #6c757d;
+        font-size: 1.05rem;
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 25px;
+    }
+
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+    .label {
+        font-weight: 700;
+        color: #555;
+    }
+
+    .total-value {
+        color: #198754;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .buttons-wrapper {
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn-delete,
+    .btn-back {
+        flex: 1;
+        text-align: center;
+        padding: 14px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        border: none;
+    }
+
+    .btn-delete {
+        background: linear-gradient(135deg,#dc3545,#b02a37);
+        color: white;
+    }
+
+        .btn-delete:hover {
+            opacity: .95;
+        }
+
+    .btn-back {
+        background: #f1f3f5;
+        color: #333;
+    }
+
+</style>

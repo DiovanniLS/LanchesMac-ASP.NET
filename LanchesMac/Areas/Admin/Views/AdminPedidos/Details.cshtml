@@ -1,84 +1,306 @@
 ﻿@model LanchesMac.Models.Pedido
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do Pedido";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
 
-<div>
-    <h4>Pedido</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sobrenome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sobrenome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Endereco1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Endereco1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Endereco2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Endereco2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cep)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cep)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PedidoEnviado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PedidoEnviado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PedidoEntregueEm)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PedidoEntregueEm)
-        </dd>
-    </dl>
+    <div class="details-card">
+
+        <div class="text-center mb-5">
+
+            <h1 class="page-title">
+                📦 Pedido #@Model.PedidoId
+            </h1>
+
+            <p class="text-muted">
+                Informações completas do pedido
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <div class="info-card">
+
+                    <h4 class="section-title">
+                        👤 Cliente
+                    </h4>
+
+                    <div class="info-item">
+                        <span class="label">Nome</span>
+                        <span>@Model.Nome @Model.Sobrenome</span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Telefone</span>
+                        <span>@Model.Telefone</span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">E-mail</span>
+                        <span>@Model.Email</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="info-card">
+
+                    <h4 class="section-title">
+                        🚚 Entrega
+                    </h4>
+
+                    <div class="info-item">
+                        <span class="label">Endereço</span>
+                        <span>@Model.Endereco1</span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.Endereco2))
+                    {
+                        <div class="info-item">
+                            <span class="label">Complemento</span>
+                            <span>@Model.Endereco2</span>
+                        </div>
+                    }
+
+                    <div class="info-item">
+                        <span class="label">CEP</span>
+                        <span>@Model.Cep</span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Cidade</span>
+                        <span>@Model.Cidade</span>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="label">Estado</span>
+                        <span>@Model.Estado</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="info-card mt-4">
+
+            <h4 class="section-title">
+                📋 Informações do Pedido
+            </h4>
+
+            <div class="info-item">
+                <span class="label">Data do Pedido</span>
+                <span>
+                    @Model.PedidoEnviado.ToString("dd/MM/yyyy HH:mm")
+                </span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Entrega</span>
+
+                @if (Model.PedidoEntregueEm != null)
+                {
+                    <span class="badge-entregue">
+                        Entregue em @Model.PedidoEntregueEm.Value.ToString("dd/MM/yyyy HH:mm")
+                    </span>
+                }
+                else
+                {
+                    <span class="badge-pendente">
+                        Pendente
+                    </span>
+                }
+            </div>
+
+            <div class="info-item">
+                <span class="label">Total de Itens</span>
+                <span>@Model.TotalItensPedido</span>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Valor Total</span>
+                <span class="total-price">
+                    @Model.PedidoTotal.ToString("C")
+                </span>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <h5 class="mt-4 mb-3">
+            🍔 Itens do Pedido
+        </h5>
+
+        @if (Model.PedidoItens != null && Model.PedidoItens.Any())
+        {
+            <div class="table-responsive">
+
+                <table class="table table-sm align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Lanche</th>
+                            <th>Qtd</th>
+                            <th>Preço Unit.</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.PedidoItens)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.Lanche.Nome
+                                </td>
+
+                                <td>
+                                    @item.Quantidade
+                                </td>
+
+                                <td>
+                                    @item.Preco.ToString("C")
+                                </td>
+
+                                <td>
+                                    @((item.Preco * item.Quantidade).ToString("C"))
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning mb-0">
+                Nenhum item encontrado neste pedido.
+            </div>
+        }
+
+        <div class="buttons-wrapper mt-4">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.PedidoId"
+               class="btn-edit">
+                ✏️ Editar
+            </a>
+
+            <a asp-action="Index"
+               class="btn-back">
+                ← Voltar
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.PedidoId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<style>
+
+    .details-card {
+        max-width: 1000px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 25px;
+    }
+
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+    .label {
+        font-weight: 700;
+        color: #555;
+    }
+
+    .total-price {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #198754;
+    }
+
+    .badge-entregue {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 600;
+    }
+
+    .badge-pendente {
+        background: #fff3cd;
+        color: #856404;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 600;
+    }
+
+    .buttons-wrapper {
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn-edit,
+    .btn-back {
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        padding: 14px;
+        border-radius: 14px;
+        font-weight: 700;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg,#0d6efd,#0b5ed7);
+        color: white;
+    }
+
+    .btn-back {
+        background: #f1f3f5;
+        color: #333;
+    }
+
+</style>

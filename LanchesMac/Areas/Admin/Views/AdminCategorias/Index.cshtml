@@ -1,4 +1,7 @@
-﻿@model IEnumerable<LanchesMac.Models.Categoria>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model IPagedList<LanchesMac.Models.Categoria>
 
 @{
     ViewData["Title"] = "Categorias";
@@ -73,6 +76,20 @@
             </tbody>
 
         </table>
+
+        <div class="d-flex justify-content-center mt-4">
+
+            @Html.PagedListPager(
+            Model,
+            page => Url.Action("Index", new { page }),
+                        new PagedListRenderOptions
+                        {
+                            UlElementClasses = new[] { "pagination" },
+                            LiElementClasses = new[] { "page-item" },
+                            PageClasses = new[] { "page-link" }
+                        })
+
+        </div>
 
     </div>
 
